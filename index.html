@@ -3,496 +3,575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3ª RISP Anápolis - Consulta Oficial AISP 14 e 15 (2025)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <title>3ª RISP Anápolis – AISP 14 e 15 (2025)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
-        :root { --p:#0a3d62; --s:#1e5a8e; --d:#caa347; --a14:#0a3d62; --a15:#c62828; }
-        *{ margin:0;padding:0;box-sizing:border-box; }
-        body{font-family:'Roboto',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);min-height:100vh;color:#333;}
-        .container{max-width:1300px;margin:20px auto;background:white;border-radius:20px;box-shadow:0 20px 80px rgba(0,0,0,0.4);overflow:hidden;}
-        .header{background:linear-gradient(135deg,var(--p),var(--s));color:white;padding:50px 20px;text-align:center;}
-        .header h1{font-size:34px;font-weight:900;letter-spacing:3px;text-shadow:0 4px 12px rgba(0,0,0,0.6);}
-        .header p{font-size:19px;opacity:0.95;margin-top:10px;}
-        .institutional{background:#f8f9fa;border-left:6px solid var(--d);padding:35px;margin:30px;border-radius:12px;font-size:14px;line-height:1.9;color:#2c3e50;text-align:justify;}
-        .stats{display:flex;justify-content:center;flex-wrap:wrap;gap:35px;padding:40px 20px;background:#f8f9fa;}
-        .stat{background:white;padding:30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.12);min-width:200px;text-align:center;}
-        .stat-number{font-size:48px;font-weight:900;color:var(--p);}
-        .stat-label{font-size:15px;font-weight:600;color:#555;margin-top:8px;}
-        .search{padding:60px 40px;background:white;text-align:center;}
-        .search-wrapper{position:relative;max-width:850px;margin:0 auto;}
-        #bairroInput{width:100%;padding:20px 28px;font-size:19px;border:3px solid #e0e0e0;border-radius:15px;transition:all 0.3s;}
-        #bairroInput:focus{outline:none;border-color:var(--p);box-shadow:0 0 25px rgba(10,61,98,0.3);}
-        #buscarBtn{margin-top:18px;padding:18px 60px;font-size:19px;background:linear-gradient(135deg,var(--p),var(--s));color:white;border:none;border-radius:15px;cursor:pointer;font-weight:bold;box-shadow:0 8px 25px rgba(10,61,98,0.4);}
-        #sugestoes{position:absolute;top:100%;left:0;right:0;background:white;border:1px solid #ddd;border-radius:12px;max-height:350px;overflow-y:auto;z-index:1000;box-shadow:0 15px 50px rgba(0,0,0,0.25);display:none;}
-        .sugestao-item{padding:16px 25px;cursor:pointer;border-bottom:1px solid #eee;font-size:17px;transition:0.2s;}
-        .sugestao-item:hover,.sugestao-item.selected{background:var(--p);color:white;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#333;min-height:100vh;}
+        .container{max-width:1350px;margin:20px auto;background:#fff;border-radius:20px;box-shadow:0 20px 80px rgba(0,0,0,0.5);overflow:hidden;}
+        .header{background:linear-gradient(135deg,#0a3d62,#1e5a8e);color:#fff;padding:50px 20px;text-align:center;}
+        .header h1{font-size:34px;font-weight:900;letter-spacing:2px;}
+        .header p{font-size:19px;margin-top:10px;}
+        .institutional{background:#f8f9fa;border-left:6px solid #caa347;padding:30px;margin:30px;border-radius:12px;font-size:14px;line-height:1.9;color:#2c3e50;}
+        .stats{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;padding:40px 20px;background:#f8f9fa;}
+        .stat{background:#fff;padding:30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);min-width:200px;text-align:center;}
+        .stat-number{font-size:48px;font-weight:900;color:#0a3d62;}
+        .search{padding:60px 40px;text-align:center;background:#fff;}
+        #bairroInput{width:100%;max-width:850px;padding:20px 28px;font-size:19px;border:3px solid #e0e0e0;border-radius:15px;}
+        #bairroInput:focus{outline:none;border-color:#0a3d62;box-shadow:0 0 25px rgba(10,61,98,0.3);}
+        #buscarBtn,#geoBtn{margin-top:18px;padding:18px 60px;font-size:19px;border:none;border-radius:15px;cursor:pointer;font-weight:bold;}
+        #buscarBtn{background:#0a3d62;color:#fff;}
+        #geoBtn{background:#caa347;color:#fff;margin-left:15px;}
+        #sugestoes{position:absolute;background:#fff;border:1px solid #ddd;border-radius:12px;max-height:350px;overflow-y:auto;width:850px;box-shadow:0 15px 50px rgba(0,0,0,0.25);z-index:1000;display:none;left:50%;transform:translateX(-50%);margin-top:5px;}
+        .sugestao-item{padding:16px 25px;cursor:pointer;border-bottom:1px solid #eee;text-align:left;}
+        .sugestao-item:hover{background:#0a3d62;color:#fff;}
         .result{padding:50px;background:#f9fbfc;display:none;}
         .result.show{display:block;animation:fadeIn .7s;}
         @keyframes fadeIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
-        .info{background:linear-gradient(135deg,#e8f4f8,#f0f8ff);border-left:6px solid var(--d);padding:35px;border-radius:15px;margin-bottom:30px;box-shadow:0 12px 35px rgba(0,0,0,0.12);}
-        .info h3{font-size:30px;margin-bottom:20px;color:var(--p);}
-        .badge{display:inline-block;background:linear-gradient(135deg,var(--d),#d4af37);color:white;padding:12px 30px;border-radius:30px;font-weight:bold;font-size:20px;box-shadow:0 5px 18px rgba(202,163,71,0.5);}
-        #map{height:550px;border-radius:15px;border:4px solid var(--p);margin-top:25px;box-shadow:0 15px 40px rgba(0,0,0,0.2);}
-        .footer{text-align:center;padding:50px;background:var(--p);color:white;font-size:15px;}
-        @media(max-width:768px){.header h1{font-size:26px} .stats{flex-direction:column;align-items:center} #map{height:420px}}
-        .pulse{animation:pulse 2s infinite;}
-        @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+        .info{background:linear-gradient(135deg,#e8f4f8,#f0f8ff);border-left:6px solid #caa347;padding:35px;border-radius:15px;margin-bottom:30px;}
+        .badge{background:linear-gradient(135deg,#caa347,#d4af37);color:#fff;padding:12px 30px;border-radius:30px;font-weight:bold;font-size:20px;display:inline-block;}
+        #map{height:550px;border-radius:15px;border:4px solid #0a3d62;margin-top:25px;}
+        .footer{text-align:center;padding:40px;background:#0a3d62;color:#fff;font-size:15px;}
+        
+        @media(max-width: 768px){
+            .header h1{font-size: 24px;}
+            .stat{min-width: 100%;}
+            #buscarBtn, #geoBtn{width: 100%; margin-left: 0; margin-top: 10px;}
+            #sugestoes{width: 90%;}
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>3ª RISP - CONSULTA OFICIAL DE BAIRROS</h1>
-        <p>Áreas Integradas de Segurança Pública • AISP 14 (Norte) e AISP 15 (Sul) • Anápolis/GO • 2025</p>
+        <h1>3ª RISP – CONSULTA OFICIAL DE BAIRROS</h1>
+        <p>AISP 14 (Norte) e AISP 15 (Sul) – Anápolis/GO – 2025</p>
     </div>
     <div class="institutional">
-        <strong>ESTADO DE GOIÁS • SECRETARIA DE ESTADO DA SEGURANÇA PÚBLICA • POLÍCIA MILITAR DO ESTADO DE GOIÁS</strong><br>
-        <strong>COMANDO DE POLICIAMENTO DO INTERIOR - 3ª RISP • Minuta SEI 202500016009205</strong><br><br>
-        Sistema oficial com todas as áreas circunscricionais das AISPs 14 e 15 de Anápolis (atualizado conforme documento oficial de novembro/2025).
+        <strong>ESTADO DE GOIÁS • SECRETARIA DA SEGURANÇA PÚBLICA • POLÍCIA MILITAR</strong><br>
+        <strong>3ª RISP • Minuta SEI 202500016009205 • Documento Oficial</strong>
     </div>
     <div class="stats">
-        <div class="stat"><div class="stat-number">334</div><div class="stat-label">Bairros Cadastrados</div></div>
-        <div class="stat"><div class="stat-number">2</div><div class="stat-label">AISPs</div></div>
-        <div class="stat"><div class="stat-number">1</div><div class="stat-label">Município</div></div>
+        <div class="stat"><div class="stat-number">334</div><div>Bairros Catalogados</div></div>
+        <div class="stat"><div class="stat-number">2</div><div>AISPs</div></div>
+        <div class="stat"><div class="stat-number">1</div><div>Município</div></div>
     </div>
     <div class="search">
-        <label style="font-size:25px;color:var(--p);font-weight:700;margin-bottom:30px;display:block;">Digite o bairro (todos os 334 estão disponíveis)</label>
-        <div class="search-wrapper">
-            <input type="text" id="bairroInput" placeholder="Ex: Vila De Lourdes, Residencial Flamboyant, DAIA, Jundiaí..." autocomplete="off">
+        <label style="font-size:25px;color:#0a3d62;font-weight:700;display:block;margin-bottom:30px;">
+            Digite o bairro de Anápolis
+        </label>
+        <div style="position:relative;display:block;">
+            <input type="text" id="bairroInput" placeholder="Ex: Jundiaí, Vila Jaiara, Calixtolândia, IAPC..." autocomplete="off">
             <div id="sugestoes"></div>
-            <button id="buscarBtn">Consultar Bairro</button>
         </div>
-        <button id="geoBtn" style="margin-top:18px;padding:14px 35px;background:#caa347;color:white;border:none;border-radius:12px;font-weight:bold;cursor:pointer;">
-            Minha Localização Atual
-        </button>
+        <button id="buscarBtn">Consultar Bairro</button>
+        <button id="geoBtn">Minha Localização</button>
     </div>
 
     <div id="result" class="result">
         <div id="info" class="info"></div>
-        <div style="text-align:center;margin:25px 0;">
-            <button onclick="window.print()" style="padding:14px 40px;background:#0a3d62;color:white;border:none;border-radius:12px;font-size:17px;cursor:pointer;">
-                Imprimir / Exportar PDF
+        <div style="text-align:center;margin:30px 0;">
+            <button onclick="window.print()" style="padding:14px 40px;background:#0a3d62;color:#fff;border:none;border-radius:12px;font-size:17px;cursor:pointer;">
+                Imprimir / Salvar PDF
             </button>
         </div>
         <div id="map"></div>
     </div>
 
     <div class="footer">
-        <strong>Sistema Oficial 3ª RISP • Atualizado conforme Minuta SEI 202500016009205 • Novembro/2025</strong>
+        <strong>3ª RISP Anápolis • Base de Dados Completa (Minuta 2025) • Offline</strong>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// ============ TODOS OS BAIRROS OFICIAIS DO PDF (334 entradas - 100% completo) ============
+// CONFIGURAÇÃO DOS DADOS DAS AISPS
+const aisp14 = "AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP";
+const aisp15 = "AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP";
+
+// BASE DE DADOS COMPLETA - 334 BAIRROS (EXTRAÍDO DO PDF OFICIAL)
 const bairros = {
-"Adriana Parque":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Anexo Antônio Fernandes":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Anexo Bom Sucesso":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Anexo Frei Eustáquio":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Anexo Itamaraty":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Anexo Maracananzinho":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Antônio Fernandes":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Alvorada":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Bandeiras":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Boa Vista":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Bom Sucesso":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Boa Vista I Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Boa Vista II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Colorado":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras De Lazer São Jorge":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras De Recreio Mansões Do Planalto":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Miranópolis":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Recreio Anicuns":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Chácaras Vale Das Antas":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Cidade Jardim":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Cidade Universitária":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Condomínio Residencial Belas Artes":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Condomínio Residencial Grand Trianon":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Condomínio Residencial Villa Lobos":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Conjunto Iapc":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Conjunto Residencial Jamaica (Iapc)":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Distrito De Goialândia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Distrito De Interlândia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Distrito De Souzânia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Dom Pedro II":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Estância Itamaraty":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Estância Vale Verde":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Estância Vila Rica":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Frei Eustáquio":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Industrial Da Estação":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Itamaraty":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Itamaraty II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Itamaraty III Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Itamaraty IV Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Alexandrina":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Bandeirante":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Das Américas 1ª Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Das Américas 2ª Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Das Américas 3ª Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Das Oliveiras":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Dos Ipês":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Goiano":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Nações Unidas":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Nova Alexandrina":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Panorama":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Petrópolis":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Progresso":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Promissão":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Santana":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Santana 2ª Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim São Jorge":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Silveira":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Jardim Suíço":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Lapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Las Palmas":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Loteamento Guanabara":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Loteamento Residencial América":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Maracananzinho":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Maracanã":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Nossa Senhora Aparecida":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Nova Vila Jaiara":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Das Nações":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Dos Eucaliptos":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Dos Pirineus":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Iracema":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Michel":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Parque Residencial Das Flores":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Recanto Do Sol":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Aldeia Dos Sonhos":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Ana Caroline":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Araguaia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Araujoville":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Caminho Das Águas":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Centenário":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Das Rosas":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Dom Emanuel":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Dom Felipe":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Flor Do Cerrado I Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Flor Do Cerrado II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Mônica Braga":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Monte Sinai":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Palmeiras":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Paris":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Portal Do Cerrado":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Portal Do Sol":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Rio Jordão":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Santa Cruz":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Terezinha Braga":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Vale Do Sol I Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Vale Do Sol II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Vale Dos Pirineus":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Valência":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Veneza":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Verona":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Villa Bella":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Residencial Virginia Corrêa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Reverendo Arquibald (Conjunto Mirage)":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Santos Dumont":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"São Carlos I Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"São Carlos II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"São José":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"São Lourenço":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Bougainville":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Central":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Escala":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Escala 2ª Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Lago Dos Buritis":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Residencial Jandaia I Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Setor Residencial Jandaia II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Sítio De Recreio Jardim Boa Vista":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Sítios De Recreio Americano Do Brasil":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Sítios De Recreio Das Mansões":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Sítios De Recreio Denise":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Sítios De Recreio Jardim Peixoto":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Brasil":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Calixto Abrão":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Corumbá":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Das Acácias":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Dom Bosco":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Dos Oficiais":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Fabril":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Falluh":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Gonçalves":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Harmonia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Interlândia":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Jacinto":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Jaiara":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Jaiara Norte":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Menino Jesus":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Moreira":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Norte":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Nova Jaiara":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Santa Helena":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Santa Isabel":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Santa Isabel II Etapa":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Santa Maria":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila São João":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila São Jorge":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila Tocantins":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Vila União":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Village Jardim Anápolis":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
-"Zona Rural AISP 14":"AISP 14 - Norte|28º BPM|1º DP, 4º DP e 5º DP",
+    // --- AISP 14 (NORTE) ---
+    "Adriana Parque": aisp14,
+    "Anexo Antônio Fernandes": aisp14,
+    "Anexo Bom Sucesso": aisp14,
+    "Anexo Frei Eustáquio": aisp14,
+    "Anexo Itamaraty": aisp14,
+    "Anexo Maracananzinho": aisp14,
+    "Antônio Fernandes": aisp14,
+    "Alvorada": aisp14,
+    "Bandeiras": aisp14,
+    "Boa Vista": aisp14,
+    "Bom Sucesso": aisp14,
+    "Chácaras Boa Vista I Etapa": aisp14,
+    "Chácaras Boa Vista II Etapa": aisp14,
+    "Chácaras Colorado": aisp14,
+    "Chácaras De Lazer São Jorge": aisp14,
+    "Chácaras De Recreio Mansões Do Planalto": aisp14,
+    "Chácaras Miranópolis": aisp14,
+    "Chácaras Recreio Anicuns": aisp14,
+    "Chácaras Vale Das Antas": aisp14,
+    "Cidade Jardim": aisp14,
+    "Cidade Universitária": aisp14,
+    "Condomínio Residencial Belas Artes": aisp14,
+    "Condomínio Residencial Grand Trianon": aisp14,
+    "Condomínio Residencial Villa Lobos": aisp14,
+    "Conjunto IAPC": aisp14,
+    "Conjunto Residencial Jamaica (IAPC)": aisp14,
+    "Distrito De Goialândia": aisp14,
+    "Distrito De Interlândia": aisp14,
+    "Distrito De Souzânia": aisp14,
+    "Dom Pedro II": aisp14,
+    "Estância Itamaraty": aisp14,
+    "Estância Vale Verde": aisp14,
+    "Estância Vila Rica": aisp14,
+    "Frei Eustáquio": aisp14,
+    "Industrial Da Estação": aisp14,
+    "Itamaraty": aisp14,
+    "Itamaraty II Etapa": aisp14,
+    "Itamaraty III Etapa": aisp14,
+    "Itamaraty IV Etapa": aisp14,
+    "Jardim Alexandrina": aisp14,
+    "Jardim Bandeirante": aisp14,
+    "Jardim Das Américas 1ª Etapa": aisp14,
+    "Jardim Das Américas 2ª Etapa": aisp14,
+    "Jardim Das Américas 3ª Etapa": aisp14,
+    "Jardim Das Oliveiras": aisp14,
+    "Jardim Dos Ipês": aisp14,
+    "Jardim Goiano": aisp14,
+    "Jardim Nações Unidas": aisp14,
+    "Jardim Nova Alexandrina": aisp14,
+    "Jardim Panorama": aisp14,
+    "Jardim Petrópolis": aisp14,
+    "Jardim Progresso": aisp14,
+    "Jardim Promissão": aisp14,
+    "Jardim Santana": aisp14,
+    "Jardim Santana 2ª Etapa": aisp14,
+    "Jardim São Jorge": aisp14,
+    "Jardim Silveira": aisp14,
+    "Jardim Suíço": aisp14,
+    "Lapa": aisp14,
+    "Las Palmas": aisp14,
+    "Loteamento Guanabara": aisp14,
+    "Loteamento Residencial América": aisp14,
+    "Maracanã": aisp14,
+    "Maracananzinho": aisp14,
+    "Nossa Senhora Aparecida": aisp14,
+    "Nova Vila Jaiara": aisp14,
+    "Parque Das Nações": aisp14,
+    "Parque Dos Eucaliptos": aisp14,
+    "Parque Dos Pirineus": aisp14,
+    "Parque Iracema": aisp14,
+    "Parque Michel": aisp14,
+    "Parque Residencial Das Flores": aisp14,
+    "Recanto Do Sol": aisp14,
+    "Residencial Aldeia Dos Sonhos": aisp14,
+    "Residencial Ana Caroline": aisp14,
+    "Residencial Araguaia": aisp14,
+    "Residencial Araujoville": aisp14,
+    "Residencial Caminho Das Águas": aisp14,
+    "Residencial Centenário": aisp14,
+    "Residencial Das Rosas": aisp14,
+    "Residencial Dom Emanuel": aisp14,
+    "Residencial Dom Felipe": aisp14,
+    "Residencial Flor Do Cerrado I Etapa": aisp14,
+    "Residencial Flor Do Cerrado II Etapa": aisp14,
+    "Residencial Mônica Braga": aisp14,
+    "Residencial Monte Sinai": aisp14,
+    "Residencial Palmeiras": aisp14,
+    "Residencial Paris": aisp14,
+    "Residencial Portal Do Cerrado": aisp14,
+    "Residencial Portal Do Sol": aisp14,
+    "Residencial Rio Jordão": aisp14,
+    "Residencial Santa Cruz": aisp14,
+    "Residencial Terezinha Braga": aisp14,
+    "Residencial Vale Do Sol I Etapa": aisp14,
+    "Residencial Vale Do Sol II Etapa": aisp14,
+    "Residencial Vale Dos Pirineus": aisp14,
+    "Residencial Valência": aisp14,
+    "Residencial Veneza": aisp14,
+    "Residencial Verona": aisp14,
+    "Residencial Villa Bella": aisp14,
+    "Residencial Virginia Corrêa": aisp14,
+    "Reverendo Arquibald (Conjunto Mirage)": aisp14,
+    "Santos Dumont": aisp14,
+    "São Carlos I Etapa": aisp14,
+    "São Carlos II Etapa": aisp14,
+    "São José": aisp14,
+    "São Lourenço": aisp14,
+    "Setor Bougainville": aisp14,
+    "Setor Central": aisp14,
+    "Setor Escala": aisp14,
+    "Setor Escala 2ª Etapa": aisp14,
+    "Setor Lago Dos Buritis": aisp14,
+    "Setor Residencial Jandaia I Etapa": aisp14,
+    "Setor Residencial Jandaia II Etapa": aisp14,
+    "Sítio De Recreio Jardim Boa Vista": aisp14,
+    "Sítios De Recreio Americano Do Brasil": aisp14,
+    "Sítios De Recreio Das Mansões": aisp14,
+    "Sítios De Recreio Denise": aisp14,
+    "Sítios De Recreio Jardim Peixoto": aisp14,
+    "Vila Brasil": aisp14,
+    "Vila Calixto Abrão": aisp14,
+    "Vila Corumbá": aisp14,
+    "Vila Das Acácias": aisp14,
+    "Vila Dom Bosco": aisp14,
+    "Vila Dos Oficiais": aisp14,
+    "Vila Fabril": aisp14,
+    "Vila Falluh": aisp14,
+    "Vila Gonçalves": aisp14,
+    "Vila Harmonia": aisp14,
+    "Vila Interlândia": aisp14,
+    "Vila Jacinto": aisp14,
+    "Vila Jaiara": aisp14,
+    "Vila Jaiara Norte": aisp14,
+    "Vila Menino Jesus": aisp14,
+    "Vila Moreira": aisp14,
+    "Vila Norte": aisp14,
+    "Vila Nova Jaiara": aisp14,
+    "Vila Santa Helena": aisp14,
+    "Vila Santa Isabel": aisp14,
+    "Vila Santa Isabel II Etapa": aisp14,
+    "Vila Santa Maria": aisp14,
+    "Vila São João": aisp14,
+    "Vila São Jorge": aisp14,
+    "Vila Tocantins": aisp14,
+    "Vila União": aisp14,
+    "Village Jardim Anápolis": aisp14,
+    "Zona Rural AISP 14": aisp14,
 
-// ====== AISP 15 - Sul (todos do PDF oficial) ======
-"Residencial Girassol":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Residencial Pedro Ludovico":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Residencial Pedro Ludovico":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Alto Da Bela Vista":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Anápolis City":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Andracel Center":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Branápolis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Campus Da UEG":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Chácara Jonas Duarte":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Vale dos Pássaros":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Alphaville Anápolis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Residencial Gaudí":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Sunflower":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Terras Alphaville Anápolis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Conjunto Habitacional Esperança II":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Conjunto Habitacional Vila União":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Conjunto Raul Balduino":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Conjunto Residencial Vila Verde":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Daia Distrito Agroindustrial De Anápolis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Eldorado":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Gran Ville 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Ipiranga Atlético Clube":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim América":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Ana Cláudia":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Ana Paula":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Arco Verde 1ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Arco Verde 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Bom Clima":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Calixto":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Das Samambaias":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Dianna":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Eldorado":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Europa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Gonçalves":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Itália":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Primavera 3ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Santa Cecília":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim São Paulo":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jibran El Hadj":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jk Nova Capital":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jk Setor Oeste":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jóquei Club":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jundiaí":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jundiaí Industrial":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Loteamento Novo Jundiaí":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Loteamento Olhos D'Água":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Loteamento Reny Cury":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Loteamento Residencial Victor Braga":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Novo Paraíso":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Brasília 1ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Brasília 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Calixtópolis I":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Calixtópolis II":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Das Primaveras":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque São João":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Plataforma Logística Multimodal":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Polocentro 1ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Polocentro 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Privé Lírios Do Campo":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Adelaide":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Alphaville":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Arco Íris":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Bela Vista":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Boa Esperança":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Cerejeiras":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Copacabana":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Do Cerrado":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Geovanni Braga":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Ildefonso Limírio":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Itatiaia":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Itororó":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Jardins Do Lago":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Marla Cristina":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Morumbi":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Novo Mundo":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Porto Rico":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Santo Antônio":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Santo Expedito":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"São Cristóvão":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Marcos":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Shangrilá":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Tangará":"ISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Santa Clara":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"André":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Santo Antônio":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"João":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Sebastião":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Sul I Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Sul II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Sul III Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Sul Jamil Miguel 1ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Sul Jamil Miguel 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Summerville":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Sítios De Recreio Presidente":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Sítios De Recreio Vale Das Laranjeiras":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Celina":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Dona Maria":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Dos Sargentos":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Esperança":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa I Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa III Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa IV Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Formosa VI Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Goiás":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Góis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Guarani":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Industrial":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila João Luiz De Oliveira":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Jussara":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Mariana":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Mathias":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Miguel Jorge":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Milmar":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Nossa Senhora D Abadia":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Popular Munir Calixto":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Santa Maria De Nazareth":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Rita":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Santa Rosa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Santana":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila São Joaquim":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila São Joaquim II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila São José":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vivian Parque I Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-" Vivian Parque II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Batista":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Calixtolândia I Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Calixtolândia II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Campos Elísios":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Chácaras Americanas":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Condomínio Residencial Sol Nascente":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Conjunto Habitacional Filostro Machado":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"De Lourdes":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Gran Ville":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Granja Santo Antônio":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Alvorada":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Bela Vista":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Esperança":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Flor De Liz":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Ibirapuera":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Lusitano":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Palmares":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Planalto":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Primavera 1ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Primavera 2ª Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Jardim Tesouro":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vera Cruz":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Manoel Domingues":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Morada Nova":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Paraíso":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Residencial Ander I Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque Residencial Ander II Etapa":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque São Conrado":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Parque São Jerônimo":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Airton Senna":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Alfredo Abraão":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Anaville":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Buritis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Cidade Industrial":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Daiana I":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Daiana II":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Do Trabalhador":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Flamboyant":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Florença":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Gabriela":"AISP 15 - Sul|4º BPM|2º DP, 3º e 6º DP",
-"Residencial Ipanema":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Aliança":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Roses Garden":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial São Vicente":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Vila Feliz":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Industrial Aeroporto":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Industrial Munir Calixto":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Setor Tropical":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vale Das Brisas":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila De Lourdes":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila João XXIII":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Nossa Senhora Dos Anjos":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Distrito de Joanápolis":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Operária":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Rica":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Santa Terezinha":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila São Vicente":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Vila Sul":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Residencial Campos do Jordão":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP",
-"Zona Rural AISP 15":"AISP 15 - Sul|4º BPM|2º DP, 3º DP e 6º DP"
+    // --- AISP 15 (SUL) ---
+    "Residencial Girassol": aisp15,
+    "Vila Residencial Pedro Ludovico": aisp15,
+    "Setor Residencial Pedro Ludovico": aisp15,
+    "Alto Da Bela Vista": aisp15,
+    "Anápolis City": aisp15,
+    "Andracel Center": aisp15,
+    "Branápolis": aisp15,
+    "Campus Da UEG": aisp15,
+    "Chácara Jonas Duarte": aisp15,
+    "Condomínio Vale dos Pássaros": aisp15,
+    "Condomínio Alphaville Anápolis": aisp15,
+    "Condomínio Residencial Gaudí": aisp15,
+    "Condomínio Sunflower": aisp15,
+    "Condomínio Terras Alphaville Anápolis": aisp15,
+    "Conjunto Habitacional Esperança II": aisp15,
+    "Conjunto Habitacional Vila União": aisp15,
+    "Conjunto Raul Balduino": aisp15,
+    "Conjunto Residencial Vila Verde": aisp15,
+    "Daia Distrito Agroindustrial De Anápolis": aisp15,
+    "Eldorado": aisp15,
+    "Gran Ville 2ª Etapa": aisp15,
+    "Ipiranga Atlético Clube": aisp15,
+    "Jardim América": aisp15,
+    "Jardim Ana Cláudia": aisp15,
+    "Jardim Ana Paula": aisp15,
+    "Jardim Arco Verde 1ª Etapa": aisp15,
+    "Jardim Arco Verde 2ª Etapa": aisp15,
+    "Jardim Bom Clima": aisp15,
+    "Jardim Calixto": aisp15,
+    "Jardim Das Samambaias": aisp15,
+    "Jardim Dianna": aisp15,
+    "Jardim Eldorado": aisp15,
+    "Jardim Europa": aisp15,
+    "Jardim Gonçalves": aisp15,
+    "Jardim Itália": aisp15,
+    "Jardim Primavera 3ª Etapa": aisp15,
+    "Jardim Santa Cecília": aisp15,
+    "Jardim São Paulo": aisp15,
+    "Jibran El Hadj": aisp15,
+    "Jk Nova Capital": aisp15,
+    "Jk Setor Oeste": aisp15,
+    "Jóquei Club": aisp15,
+    "Jundiaí": aisp15,
+    "Jundiaí Industrial": aisp15,
+    "Loteamento Novo Jundiaí": aisp15,
+    "Loteamento Olhos D'Água": aisp15,
+    "Loteamento Reny Cury": aisp15,
+    "Loteamento Residencial Victor Braga": aisp15,
+    "Novo Paraíso": aisp15,
+    "Parque Brasília 1ª Etapa": aisp15,
+    "Parque Brasília 2ª Etapa": aisp15,
+    "Parque Calixtópolis I": aisp15,
+    "Parque Calixtópolis II": aisp15,
+    "Parque Das Primaveras": aisp15,
+    "Parque São João": aisp15,
+    "Plataforma Logística Multimodal": aisp15,
+    "Polocentro 1ª Etapa": aisp15,
+    "Polocentro 2ª Etapa": aisp15,
+    "Privé Lírios Do Campo": aisp15,
+    "Residencial Adelaide": aisp15,
+    "Residencial Alphaville": aisp15,
+    "Residencial Arco Íris": aisp15,
+    "Residencial Bela Vista": aisp15,
+    "Residencial Boa Esperança": aisp15,
+    "Residencial Cerejeiras": aisp15,
+    "Residencial Copacabana": aisp15,
+    "Residencial Do Cerrado": aisp15,
+    "Residencial Geovanni Braga": aisp15,
+    "Residencial Ildefonso Limírio": aisp15,
+    "Residencial Itatiaia": aisp15,
+    "Residencial Itororó": aisp15,
+    "Residencial Jardins Do Lago": aisp15,
+    "Residencial Leblon": aisp15,
+    "Residencial Marla Cristina": aisp15,
+    "Residencial Morumbi": aisp15,
+    "Residencial Novo Mundo": aisp15,
+    "Residencial Porto Rico": aisp15,
+    "Residencial Santo Antônio": aisp15,
+    "Residencial Santo Expedito": aisp15,
+    "Residencial São Cristóvão": aisp15,
+    "Residencial São Marcos": aisp15,
+    "Residencial Shangrilá": aisp15,
+    "Residencial Tangará": aisp15,
+    "Santa Clara": aisp15,
+    "Santo André": aisp15,
+    "Santo Antônio": aisp15,
+    "São João": aisp15,
+    "São Sebastião": aisp15,
+    "Setor Sul I Etapa": aisp15,
+    "Setor Sul II Etapa": aisp15,
+    "Setor Sul III Etapa": aisp15,
+    "Setor Sul Jamil Miguel 1ª Etapa": aisp15,
+    "Setor Sul Jamil Miguel 2ª Etapa": aisp15,
+    "Setor Summerville": aisp15,
+    "Sítios De Recreio Presidente": aisp15,
+    "Sítios De Recreio Vale Das Laranjeiras": aisp15,
+    "Vila Celina": aisp15,
+    "Vila Dona Maria": aisp15,
+    "Vila Dos Sargentos": aisp15,
+    "Vila Esperança": aisp15,
+    "Vila Formosa": aisp15,
+    "Vila Formosa I Etapa": aisp15,
+    "Vila Formosa II Etapa": aisp15,
+    "Vila Formosa III Etapa": aisp15,
+    "Vila Formosa IV Etapa": aisp15,
+    "Vila Formosa VI Etapa": aisp15,
+    "Vila Goiás": aisp15,
+    "Vila Góis": aisp15,
+    "Vila Guarani": aisp15,
+    "Vila Industrial": aisp15,
+    "Vila João Luiz De Oliveira": aisp15,
+    "Vila Jussara": aisp15,
+    "Vila Mariana": aisp15,
+    "Vila Mathias": aisp15,
+    "Vila Miguel Jorge": aisp15,
+    "Vila Milmar": aisp15,
+    "Vila Nossa Senhora D Abadia": aisp15,
+    "Vila Popular Munir Calixto": aisp15,
+    "Vila Santa Maria De Nazareth": aisp15,
+    "Vila Santa Rita": aisp15,
+    "Vila Santa Rosa": aisp15,
+    "Vila Santana": aisp15,
+    "Vila São Joaquim": aisp15,
+    "Vila São Joaquim II Etapa": aisp15,
+    "Vila São José": aisp15,
+    "Vivian Parque I Etapa": aisp15,
+    "Vivian Parque II Etapa": aisp15,
+    "Batista": aisp15,
+    "Calixtolândia I Etapa": aisp15,
+    "Calixtolândia II Etapa": aisp15,
+    "Campos Elísios": aisp15,
+    "Chácaras Americanas": aisp15,
+    "Condomínio Residencial Sol Nascente": aisp15,
+    "Conjunto Habitacional Filostro Machado": aisp15,
+    "De Lourdes": aisp15,
+    "Gran Ville": aisp15,
+    "Granja Santo Antônio": aisp15,
+    "Jardim Alvorada": aisp15,
+    "Jardim Bela Vista": aisp15,
+    "Jardim Esperança": aisp15,
+    "Jardim Flor De Liz": aisp15,
+    "Jardim Ibirapuera": aisp15,
+    "Jardim Lusitano": aisp15,
+    "Jardim Palmares": aisp15,
+    "Jardim Planalto": aisp15,
+    "Jardim Primavera 1ª Etapa": aisp15,
+    "Jardim Primavera 2ª Etapa": aisp15,
+    "Jardim Tesouro": aisp15,
+    "Jardim Vera Cruz": aisp15,
+    "Manoel Domingues": aisp15,
+    "Morada Nova": aisp15,
+    "Paraíso": aisp15,
+    "Parque Residencial Ander I Etapa": aisp15,
+    "Parque Residencial Ander II Etapa": aisp15,
+    "Parque São Conrado": aisp15,
+    "Parque São Jerônimo": aisp15,
+    "Residencial Airton Senna": aisp15,
+    "Residencial Alfredo Abraão": aisp15,
+    "Residencial Anaville": aisp15,
+    "Residencial Buritis": aisp15,
+    "Residencial Cidade Industrial": aisp15,
+    "Residencial Daiana I": aisp15,
+    "Residencial Daiana II": aisp15,
+    "Residencial Do Trabalhador": aisp15,
+    "Residencial Flamboyant": aisp15,
+    "Residencial Florença": aisp15,
+    "Residencial Gabriela": aisp15,
+    "Residencial Ipanema": aisp15,
+    "Residencial Nova Aliança": aisp15,
+    "Residencial Roses Garden": aisp15,
+    "Residencial São Vicente": aisp15,
+    "Residencial Vila Feliz": aisp15,
+    "Setor Industrial Aeroporto": aisp15,
+    "Setor Industrial Munir Calixto": aisp15,
+    "Setor Tropical": aisp15,
+    "Vale Das Brisas": aisp15,
+    "Vila De Lourdes": aisp15,
+    "Vila João XXIII": aisp15,
+    "Vila Nossa Senhora Dos Anjos": aisp15,
+    "Distrito de Joanápolis": aisp15,
+    "Vila Operária": aisp15,
+    "Vila Rica": aisp15,
+    "Vila Santa Terezinha": aisp15,
+    "Vila São Vicente": aisp15,
+    "Vila Sul": aisp15,
+    "Residencial Campos do Jordão": aisp15,
+    "Zona Rural AISP 15": aisp15
 };
 
-const lista = Object.keys(bairros).sort();
+const listaBairros = Object.keys(bairros).sort();
 
-const coords = {
-"Setor Central":[-16.3285,-48.9534],
-"Vila Jaiara":[-16.3092,-48.9518],
-"Vila De Lourdes":[-16.352,-48.962],
-"Jundiaí":[-16.3408,-48.9556],
-"Daia Distrito Agroindustrial De Anápolis":[-16.375,-48.925],
-"Alphaville Anápolis":[-16.382,-48.938],
-"Leblon":[-16.36,-48.935],
-"Flamboyant":[-16.362,-48.925],
-"Calixtolândia I Etapa":[-16.355,-48.97],
-"Jardim América":[-16.338,-48.948],
-"Cidade Jardim":[-16.32,-48.945],
-"Santa Maria De Nazareth":[-16.3485,-48.965],
-"Progresso":[-16.305,-48.945],
-"Maracanã":[-16.3155,-48.948],
-"Itamaraty":[-16.3,-48.935],
-"Vila Fabril":[-16.318,-48.958],
-"Alexandrina":[-16.322,-48.965],
-// + mais 100+ coordenadas reais pesquisadas
+// COORDENADAS APROXIMADAS PARA PONTOS CHAVE
+const coordenadas = {
+    "Setor Central": [-16.3285, -48.9534],
+    "Vila Jaiara": [-16.3092, -48.9518],
+    "Vila De Lourdes": [-16.3520, -48.9620],
+    "Jundiaí": [-16.3408, -48.9556],
+    "Daia Distrito Agroindustrial De Anápolis": [-16.3750, -48.9250],
+    "Condomínio Alphaville Anápolis": [-16.3820, -48.9380],
+    "Residencial Flamboyant": [-16.3620, -48.9250],
+    "Calixtolândia I Etapa": [-16.3550, -48.9700],
+    "Recanto Do Sol": [-16.2900, -48.9450],
+    "Vila São Joaquim": [-16.3700, -48.9600],
+    "Parque Dos Pirineus": [-16.2950, -48.9350],
+    "Jardim Alexandrina": [-16.3150, -48.9550],
+    "Maracananzinho": [-16.3200, -48.9650],
+    "Vila Santa Maria De Nazareth": [-16.3450, -48.9500],
+    "Filostro Machado": [-16.3900, -48.9500] // Aprox
 };
 
-let map = null;
+let mapa = null;
 const input = document.getElementById('bairroInput');
 const sugestoes = document.getElementById('sugestoes');
-const result = document.getElementById('result');
+const resultado = document.getElementById('result');
 const info = document.getElementById('info');
 
 input.addEventListener('input', () => {
     const termo = input.value.trim().toLowerCase();
-    if (!termo) { sugestoes.style.display='none'; return; }
-    const f = lista.filter(b => b.toLowerCase().includes(termo)).slice(0,15];
-    sugestoes.innerHTML = f.length ? f.map(b => `<div class="sugestao-item" data-b="${b}">${b} <small>(${bairros[b].split('|')[0]})</small></div>`).join('') : '<div class="sugestao-item">Nenhum encontrado</div>';
+    sugestoes.innerHTML = '';
+    if (termo === '') { sugestoes.style.display = 'none'; return; }
+
+    const encontrados = listaBairros.filter(b => b.toLowerCase().includes(termo)).slice(0, 15);
+    if (encontrados.length === 0) {
+        sugestoes.innerHTML = '<div class="sugestao-item">Nenhum bairro encontrado</div>';
+    } else {
+        encontrados.forEach(b => {
+            const div = document.createElement('div');
+            div.className = 'sugestao-item';
+            div.innerHTML = `<strong>${b}</strong> <small style='color:#666'>(${bairros[b].split('|')[0]})</small>`;
+            div.onclick = () => { input.value = b; sugestoes.style.display = 'none'; buscar(b); };
+            sugestoes.appendChild(div);
+        });
+    }
     sugestoes.style.display = 'block';
 });
 
-sugestoes.onclick = e => { if(e.target.dataset.b){ input.value=e.target.dataset.b; sugestoes.style='none'; buscar(e.target.dataset.b); }};
-document.getElementById('buscarBtn').onclick = () => { const ex = lista.find(b=>b.toLowerCase()===input.value.trim().toLowerCase()); buscar(ex || input.value.trim()); };
+document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !sugestoes.contains(e.target)) {
+        sugestoes.style.display = 'none';
+    }
+});
 
-document.getElementById('geoBtn').onclick = () => {
-    navigator.geolocation.getCurrentPosition(p => {
-        const l = [p.coords.latitude p.coords.longitude];
-        map.setView(l, 16;
-        L.marker(l, {icon: L.divIcon({html:'Você está aqui!', iconSize:[150,40]}).addTo(map).openPopup();
-    });
-};
+document.getElementById('buscarBtn').addEventListener('click', () => {
+    const termo = input.value.trim();
+    const exato = listaBairros.find(b => b.toLowerCase() === termo.toLowerCase());
+    if(exato) { buscar(exato); } 
+    else { 
+        const parcial = listaBairros.find(b => b.toLowerCase().includes(termo.toLowerCase()));
+        buscar(parcial || termo); 
+    }
+});
+
+document.getElementById('geoBtn').addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const latlng = [pos.coords.latitude, pos.coords.longitude];
+            if(mapa) {
+                mapa.setView(latlng, 16);
+                L.marker(latlng).addTo(mapa).bindPopup("Você está aqui!").openPopup();
+                // Poderíamos adicionar lógica aqui para determinar a AISP baseada em polígonos reais
+            } else {
+                alert("Realize uma busca primeiro para inicializar o mapa.");
+            }
+        }, () => alert("Erro ao obter localização. Verifique as permissões do navegador."));
+    } else {
+        alert("Geolocalização não suportada neste navegador.");
+    }
+});
 
 function buscar(nome) {
-    if (!bairros[nome]) { info.innerHTML = `<h3>Bairro não encontrado</h3><p>Verifique a grafia.</p>`; result.classList.add('show'; return; }
-    const [aisp pm dp] = bairros[nome].split('|');
-    info.innerHTML = `<h3>${nome}</h3><p><strong>AISP:</strong> <span class="badge">${aisp}</span><br><br>
-        <strong>Unidade PM:</strong> ${pm}<br>
-        <strong>Delegacias:</strong> ${dp}<br>
-        <strong>Município:</strong> Anápolis - GO</p>`;
-    initMap(nome, aisp.includes('14')?14:15);
-    result.classList.add('show');
+    if (!bairros[nome]) {
+        info.innerHTML = `<h3 style="color:#c62828;">Bairro não encontrado</h3><p>Verifique a grafia. Exibindo resultados aproximados na lista acima.</p>`;
+        resultado.classList.add('show');
+        return;
+    }
+    const dados = bairros[nome].split('|');
+    const aispCode = dados[0].includes('14') ? '14' : '15';
+    const color = aispCode === '14' ? '#0a3d62' : '#c62828'; // Azul para Norte, Vermelho para Sul (exemplo)
+
+    info.innerHTML = `
+        <h2 style="margin-bottom:15px;color:${color}">${nome}</h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:15px;">
+            <div style="background:#fff;padding:15px;border-radius:10px;border-left:5px solid ${color};box-shadow:0 2px 5px rgba(0,0,0,0.05)">
+                <strong style="font-size:18px;display:block;margin-bottom:5px;color:#555">Área Integrada (AISP)</strong>
+                <span class="badge" style="background:${color}">${dados[0]}</span>
+            </div>
+            <div style="background:#fff;padding:15px;border-radius:10px;border-left:5px solid ${color};box-shadow:0 2px 5px rgba(0,0,0,0.05)">
+                <strong style="font-size:18px;display:block;margin-bottom:5px;color:#555">Polícia Militar</strong>
+                <span style="font-size:20px;font-weight:bold">${dados[1]}</span>
+            </div>
+            <div style="background:#fff;padding:15px;border-radius:10px;border-left:5px solid ${color};box-shadow:0 2px 5px rgba(0,0,0,0.05)">
+                <strong style="font-size:18px;display:block;margin-bottom:5px;color:#555">Polícia Civil (Delegacias)</strong>
+                <span style="font-size:18px">${dados[2]}</span>
+            </div>
+        </div>`;
+    
+    iniciarMapa(nome, parseInt(aispCode));
+    resultado.classList.add('show');
 }
 
-function initMap(nome aispNum) {
-    if(map) map.remove();
-    map = L.map('map').setView([-16.3285,-48.9534],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    L.polygon([[-16.2523,-49.0135],[-16.2523,-48.8852],[-16.3321,-48.885],[-16.3321,-48.92],[-16.35,-48.92],[-16.35,-49.0135]], {color:'#0a3d62',weight:5,fillOpacity:0.2}).addTo(map).bindPopup("AISP 14 - Norte • 28º BPM");
-    L.polygon([[-16.3321,-48.92],[-16.3321,-48.885],[-16.41,-48.885],[-16.41,-49.05],[-16.35,-49.0135],[-16.3321,-48.92]], {color:'#c628',weight:5,fillOpacity:0.2}).addTo(map).bindPopup("AISP 15 - Sul • 4º BPM");
+function iniciarMapa(nome, aisp) {
+    if (mapa) mapa.remove();
+    mapa = L.map('map').setView([-16.3285,-48.9534], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(mapa);
 
-    const c = coords[nome] || (aispNum===14 ? [-16.305,-48.955] : [-16.365,-48.945]);
-    L.marker(c, {icon: L.divIcon({html:'★',iconSize:[50,50],className:'pulse',style:'color:#caa347;font-size:40px;shadow:0 0 10px black;'})}).addTo(map).bindPopup(`<strong>${nome}</strong><br>${bairros[nome].split('|')[0]}`).openPopup();
-    map.setView(c, coords[nome]?15:13);
+    // Polígonos Aproximados (Apenas visualização, não precisos geograficamente)
+    // AISP 14 (Norte)
+    const poly14 = [
+        [-16.20, -49.05], [-16.20, -48.80], 
+        [-16.33, -48.80], [-16.33, -49.05]
+    ];
+    // AISP 15 (Sul)
+    const poly15 = [
+        [-16.33, -49.05], [-16.33, -48.80], 
+        [-16.45, -48.80], [-16.45, -49.05]
+    ];
+
+    L.polygon(poly14, {color: '#0a3d62', weight: 2, fillOpacity: 0.1}).addTo(mapa).bindPopup("Área Norte - AISP 14");
+    L.polygon(poly15, {color: '#c62828', weight: 2, fillOpacity: 0.1}).addTo(mapa).bindPopup("Área Sul - AISP 15");
+
+    const coord = coordenadas[nome] || (aisp === 14 ? [-16.305,-48.955] : [-16.365,-48.945]);
+    const markerColor = aisp === 14 ? 'blue' : 'red';
+    
+    // Marcador Simples (Leaflet padrão é azul, mudamos a cor via CSS se necessário ou usamos ícone padrão)
+    L.marker(coord).addTo(mapa)
+        .bindPopup(`<b>${nome}</b><br>${bairros[nome].split('|')[0]}`)
+        .openPopup();
+    
+    mapa.setView(coord, coordenadas[nome] ? 15 : 12);
 }
 </script>
 </body>
